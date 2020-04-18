@@ -60,6 +60,16 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
 
         //////// score label ///////
+        this.graphics = this.add.graphics();
+        this.graphics.fillStyle(0X000000, 1);
+        this.graphics.beginPath();
+        this.graphics.moveTo(0, 0);
+        this.graphics.lineTo(config.width, 0);
+        this.graphics.lineTo(config.width, 30);
+        this.graphics.lineTo(0, 30);
+        this.graphics.lineTo(0, 0);
+        this.graphics.closePath();
+        this.graphics.fillPath();
         this.score = 0;
         this.scoreLabel = this.add.text(8, 8, 'score: 0', {
             fontSize: '14px',
