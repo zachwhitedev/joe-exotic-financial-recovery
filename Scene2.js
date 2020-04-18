@@ -75,6 +75,24 @@ class Scene2 extends Phaser.Scene {
             fontSize: '14px',
             fill: 'lime',
         });
+
+        ///// sound fx
+
+        this.beamSound = this.sound.add("audio_beam");
+        this.explosionSound = this.sound.add("audio_explosion");
+        this.pickupSound = this.sound.add("audio_pickup");
+
+        this.music = this.sound.add("music");
+        var musicConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+        }
+        this.music.play(musicConfig);
     }
 
     update(){
@@ -128,11 +146,13 @@ class Scene2 extends Phaser.Scene {
 
     shootBeam(){
         if(this.player.active){
+            this.beamSound.play();
             var beam = new Beam(this);
         }
     }
 
     pickPowerUp(player, powerUp){
+        this.pickupSound.play();
         powerUp.disableBody(true, true);
     }
 
@@ -153,6 +173,7 @@ class Scene2 extends Phaser.Scene {
             callbackScope: this,
             loop: false
         })
+        this.explosionSound.play();
     }
     hitEnemy(projectile, enemy){
         var explosion = new Explosion(this, enemy.x, enemy.y);
@@ -161,6 +182,8 @@ class Scene2 extends Phaser.Scene {
         this.resetShipPos(enemy);
         this.score += 10;
         this.scoreLabel.text = "SCORE " + this.score;
+
+        this.explosionSound.play();
     }
     resetPlayer(){
         var x = config.width / 2 - 8;
