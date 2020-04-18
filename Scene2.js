@@ -142,6 +142,8 @@ class Scene2 extends Phaser.Scene {
         this.scoreLabel.text = "SCORE " + this.score;
     }
     hitEnemy(projectile, enemy){
+        var explosion = new Explosion(this, enemy.x, enemy.y);
+
         projectile.destroy();
         this.resetShipPos(enemy);
         this.score += 10;
