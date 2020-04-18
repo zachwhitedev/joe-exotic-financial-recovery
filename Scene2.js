@@ -58,6 +58,13 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
         this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
         this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
+
+        //////// score label ///////
+        this.score = 0;
+        this.scoreLabel = this.add.text(8, 8, 'score: 0', {
+            fontSize: '14px',
+            fill: 'lime',
+        });
     }
 
     update(){
@@ -121,10 +128,14 @@ class Scene2 extends Phaser.Scene {
         this.resetShipPos(enemy);
         player.x = config.width / 2 - 8;
         player.y = config.height - 64;
+        this.score = 0;
+        this.scoreLabel.text = "SCORE " + this.score;
     }
     hitEnemy(projectile, enemy){
         projectile.destroy();
         this.resetShipPos(enemy);
+        this.score += 10;
+        this.scoreLabel.text = "SCORE " + this.score;
     }
 
 }
