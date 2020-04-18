@@ -13,4 +13,8 @@ var config = {
   }
 };
 
+var gameSettings = {
+  playerSpeed: 200
+}
+
 var game = new Phaser.Game(config);
