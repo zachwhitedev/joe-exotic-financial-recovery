@@ -16,6 +16,9 @@ var config = {
   },
 };
 
+var themeMusic = new Audio('./assets/sound/theme.mp3');
+themeMusic.play();
+
 var player;
 var stars;
 var platforms;
