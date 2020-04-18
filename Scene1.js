@@ -5,6 +5,7 @@ class Scene1 extends Phaser.Scene {
 
   preload() {
     this.load.image('background', 'assets/images/background.png');
+    //
     this.load.spritesheet('ship', 'assets/spritesheets/ship.png', {
       frameWidth: 16,
       frameHeight: 16,
@@ -29,10 +30,15 @@ class Scene1 extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 24,
     });
+    //1.1 load the spritesheet for the beam
+    this.load.spritesheet('beam', 'assets/spritesheets/beam.png', {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
   }
 
   create() {
-    this.add.text(20, 20, 'Loading game...', { fill: 'lime' });
+    this.add.text(20, 20, 'Loading game...');
     this.scene.start('playGame');
 
     this.anims.create({
@@ -53,6 +59,7 @@ class Scene1 extends Phaser.Scene {
       frameRate: 20,
       repeat: -1,
     });
+
     this.anims.create({
       key: 'explode',
       frames: this.anims.generateFrameNumbers('explosion'),
@@ -60,6 +67,7 @@ class Scene1 extends Phaser.Scene {
       repeat: 0,
       hideOnComplete: true,
     });
+
     this.anims.create({
       key: 'red',
       frames: this.anims.generateFrameNumbers('power-up', {
@@ -81,6 +89,14 @@ class Scene1 extends Phaser.Scene {
     this.anims.create({
       key: 'thrust',
       frames: this.anims.generateFrameNumbers('player'),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // 1.2 animation for the beam
+    this.anims.create({
+      key: 'beam_anim',
+      frames: this.anims.generateFrameNumbers('beam'),
       frameRate: 20,
       repeat: -1,
     });
