@@ -168,8 +168,8 @@ class Scene2 extends Phaser.Scene {
 
   gameLose() {
     alert('Game over!');
-    this.player.x = 38;
-    this.player.y = 10;
+    this.player.x = 22;
+    this.player.y = 120;
     this.fedScore = 0;
     this.fedScoreLabel.text = 'DEA: 0';
     this.laloScore = 0;
@@ -177,8 +177,8 @@ class Scene2 extends Phaser.Scene {
   }
   gameWin() {
     alert('YOU WON!!! YOU ARE A FRIEND OF THE CARTEL!! WOOHOO!!!!! $$$$$$$');
-    this.player.x = 38;
-    this.player.y = 10;
+    this.player.x = 22;
+    this.player.y = 120;
     this.fedScore = 0;
     this.fedScoreLabel.text = 'DEA: 0';
     this.laloScore = 0;
