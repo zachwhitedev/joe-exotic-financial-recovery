@@ -5,6 +5,8 @@ class Scene1 extends Phaser.Scene {
 
   preload() {
     this.load.image('background', 'assets/images/asphalt.png');
+    this.load.image('mainMenu', 'assets/images/mainMenu.png');
+    this.load.image('playButton', 'assets/images/play-button.png');
     this.load.image('bank', 'assets/images/bank.png');
     this.load.image('houseyellow', 'assets/images/houseyellow.png');
     this.load.image('houseblue', 'assets/images/houseblue.png');
@@ -19,6 +21,9 @@ class Scene1 extends Phaser.Scene {
     this.load.audio('music', 
       'assets/sounds/theme.mp3',
     );
+    this.load.audio('menuTheme', 
+      'assets/sounds/menuTheme.mp3',
+    );
     this.load.audio('itscarole', 
       'assets/sounds/itscarole.mp3',
     );
@@ -31,8 +36,26 @@ class Scene1 extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(20, 20, 'Loading game...');
-    this.scene.start('playGame');
+    this.menuTheme = this.sound.add('menuTheme');
+    this.menuTheme.play();
+    this.background = this.add.image(0, 0, 'mainMenu');
+    this.background.setOrigin(0, 0);
+
+    this.cameras.main.setViewport(5, 5, 390, 290);
+
+    var playButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2 + 40, 'playButton');
+    playButton.setInteractive();
+
+    playButton.on("pointerup", () => {
+      this.cameras.main.fade(200);
+      this.time.addEvent({ delay: 1000, callback: this.sceneSwitch, callbackScope: this, loop: false });
+    })
+    
+  }
+  
+  sceneSwitch(){
+    this.menuTheme.stop();
+    this.scene.start("playGame");
 }
 
 }
