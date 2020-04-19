@@ -13,10 +13,20 @@ class Scene1 extends Phaser.Scene {
     this.load.image('vertwall', 'assets/images/vertwall.png');
     this.load.image('horwall', 'assets/images/horwall.png');
     this.load.image('player', 'assets/images/joe.png');
+    this.load.image('carole', 'assets/images/carole.png');
     this.load.image('tiger', 'assets/images/tiger.png');
     this.load.image('agent', 'assets/images/agent.png');
     this.load.audio('music', 
       'assets/sounds/theme.mp3',
+    );
+    this.load.audio('itscarole', 
+      'assets/sounds/itscarole.mp3',
+    );
+    this.load.audio('neverRecover', 
+      'assets/sounds/neverRecover.mp3',
+    );
+    this.load.audio('coolcats', 
+      'assets/sounds/coolcats.mp3',
     );
   }
 

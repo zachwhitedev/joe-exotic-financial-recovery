@@ -82,7 +82,7 @@ class Scene2 extends Phaser.Scene {
     this.enemies.add(this.agent);
 
     this.agent.setVelocity(-10, 10);
-    this.agent.setBounce(1);
+    this.agent.setBounce(.9);
 
 
 
@@ -91,6 +91,7 @@ class Scene2 extends Phaser.Scene {
     this.physics.add.collider(this.buildings, this.player);
     this.physics.add.collider(this.enemies, this.buildings);
     this.physics.add.collider(this.enemies, this.enemies);
+    this.physics.add.collider(this.enemies, this.player);
 
     this.physics.add.overlap(
       this.player,
@@ -128,15 +129,18 @@ class Scene2 extends Phaser.Scene {
       fontSize: '12px',
       fill: 'lime',
     });
-
-
-
+    
+    
+    
     //////// sfx ///////////
-
+    
+    this.ohno = this.sound.add('itscarole');
+    this.neverRecover = this.sound.add('neverRecover');
+    this.coolcats = this.sound.add('coolcats');
     this.music = this.sound.add('music');
     var musicConfig = {
       mute: false,
-      volume: 1,
+      volume: 0.4,
       rate: 1,
       detune: 0,
       seek: 0,
@@ -147,7 +151,9 @@ class Scene2 extends Phaser.Scene {
   }
 
   update() {
-    if(this.totalScore % 1000 == 0 && this.totalScore !=0){
+    if(this.totalScore % 2750 == 0 && this.totalScore !=0){
+      this.addCarole();
+    } else if(this.totalScore % 1000 == 0 && this.totalScore !=0){
       this.addAgent();
     }
     this.totalScore += 1;
@@ -206,8 +212,19 @@ class Scene2 extends Phaser.Scene {
   }
 
   gameLose() {
-    alert('Game over!');
     this.music.pause();
+    this.ohno.pause();
+    var recoverConfig = {
+      mute: false,
+      volume: 8,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0,
+    };
+    this.neverRecover.play(recoverConfig);
+    alert('Game over!');
     this.player.x = 22;
     this.player.y = 120;
     this.laloScore = 10000;
@@ -223,10 +240,29 @@ class Scene2 extends Phaser.Scene {
   }
   addAgent(){
       var newAgent = this.physics.add.image(380, 350, 'agent');
-      newAgent.setVelocity(12);
-      newAgent.setBounce(1);
+      newAgent.setVelocity(10);
+      newAgent.setBounce(.9);
       newAgent.setCollideWorldBounds(true);
       this.enemies.add(newAgent);
       this.added = true;
   }
+  addCarole(){
+    this.coolcats.play();
+    var bitchConfig = {
+      mute: false,
+      volume: 8,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 2,
+    };
+    this.ohno.play(bitchConfig);
+      
+    var newCarole = this.physics.add.image(320, 150, 'carole');
+    newCarole.setVelocityX(-85);
+    newCarole.setBounce(1);
+    this.enemies.add(newCarole);
+  }
+
 }
