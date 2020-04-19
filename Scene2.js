@@ -8,7 +8,7 @@ class Scene2 extends Phaser.Scene {
   create() {
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
-    
+
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.image(30, 35, 'player');
     this.player.setCollideWorldBounds(true);
@@ -28,11 +28,13 @@ class Scene2 extends Phaser.Scene {
     this.tiger3.setVelocity(Phaser.Math.Between(-20, 20), 20);
     this.tiger3.setBounce(1);
     //////////////////////////////////
-    
-    this.agent = this.physics.add.image(300, Phaser.Math.Between(280, 340), 'agent');
+
+    this.agent = this.physics.add.image(
+      300,
+      Phaser.Math.Between(280, 340),
+      'agent'
+    );
     this.agent.setCollideWorldBounds(true);
-  
-    
 
     ///////////// BUILDINGS /////////////////
     this.bank = this.add.image(120, 245, 'bank');
@@ -52,7 +54,6 @@ class Scene2 extends Phaser.Scene {
     this.horwall2 = this.add.image(230, 154, 'horwall');
     this.horwall3 = this.add.image(186, 82, 'horwall');
     this.horwall4 = this.add.image(230, 82, 'horwall');
-    
 
     this.buildings = this.physics.add.staticGroup();
     this.buildings.add(this.bank);
@@ -72,7 +73,6 @@ class Scene2 extends Phaser.Scene {
     this.buildings.add(this.horwall4);
     /////////////////////////////////////////
 
-
     this.tigers = this.add.group();
     this.tigers.add(this.tiger);
     this.tigers.add(this.tiger2);
@@ -82,9 +82,7 @@ class Scene2 extends Phaser.Scene {
     this.enemies.add(this.agent);
 
     this.agent.setVelocity(-10, 10);
-    this.agent.setBounce(.9);
-
-
+    this.agent.setBounce(0.9);
 
     this.physics.add.collider(this.tigers, this.tigers);
     this.physics.add.collider(this.tigers, this.buildings);
@@ -120,20 +118,23 @@ class Scene2 extends Phaser.Scene {
     this.graphics.closePath();
     this.graphics.fillPath();
     this.laloScore = 10000;
-    this.laloScoreLabel = this.add.text(5, 5, 'Joe Exotic Net Worth: $' + this.laloScore, {
-      fontSize: '12px',
-      fill: 'lime',
-    });
+    this.laloScoreLabel = this.add.text(
+      5,
+      5,
+      'Joe Exotic Net Worth: $' + this.laloScore,
+      {
+        fontSize: '12px',
+        fill: 'lime',
+      }
+    );
     this.totalScore = 0;
     this.totalScoreLabel = this.add.text(290, 5, 'SCORE: ' + this.totalScore, {
       fontSize: '12px',
       fill: 'lime',
     });
-    
-    
-    
+
     //////// sfx ///////////
-    
+
     this.ohno = this.sound.add('itscarole');
     this.neverRecover = this.sound.add('neverRecover');
     this.coolcats = this.sound.add('coolcats');
@@ -151,9 +152,9 @@ class Scene2 extends Phaser.Scene {
   }
 
   update() {
-    if(this.totalScore % 2750 == 0 && this.totalScore !=0){
+    if (this.totalScore % 2750 == 0 && this.totalScore != 0) {
       this.addCarole();
-    } else if(this.totalScore % 1000 == 0 && this.totalScore !=0){
+    } else if (this.totalScore % 1000 == 0 && this.totalScore != 0) {
       this.addAgent();
     }
     this.totalScore += 1;
@@ -189,21 +190,33 @@ class Scene2 extends Phaser.Scene {
     tiger.x = 200;
     tiger.y = 128;
     tiger.setVelocity(2);
-    var x = this.player.x < 200 ? Phaser.Math.Between(330, 380) : Phaser.Math.Between(20, 100);
-    var y = this.player.y < 150 ? Phaser.Math.Between(260, 280) : Phaser.Math.Between(20, 100);
+    var x =
+      this.player.x < 200
+        ? Phaser.Math.Between(330, 380)
+        : Phaser.Math.Between(20, 100);
+    var y =
+      this.player.y < 150
+        ? Phaser.Math.Between(260, 280)
+        : Phaser.Math.Between(20, 100);
     var newTiger = this.physics.add.image(x, y, 'tiger');
     newTiger.setVelocity(20);
     newTiger.setBounce(1);
     newTiger.setCollideWorldBounds(true);
     this.tigers.add(newTiger);
   }
-  
+
   fedsTakeTiger(enemy, tiger) {
     this.laloScore -= 1000;
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
     tiger.destroy();
-    var x = this.player.x < 200 ? Phaser.Math.Between(260, 380) : Phaser.Math.Between(20, 110);
-    var y = this.player.y < 150 ? Phaser.Math.Between(250, 290) : Phaser.Math.Between(10, 110);
+    var x =
+      this.player.x < 200
+        ? Phaser.Math.Between(260, 380)
+        : Phaser.Math.Between(20, 110);
+    var y =
+      this.player.y < 150
+        ? Phaser.Math.Between(250, 290)
+        : Phaser.Math.Between(10, 110);
     var newTiger = this.physics.add.image(x, y, 'tiger');
     newTiger.setVelocity(20);
     newTiger.setBounce(1);
@@ -229,7 +242,7 @@ class Scene2 extends Phaser.Scene {
     this.player.y = 120;
     this.laloScore = 10000;
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
-    this.scene.start("playGame");
+    this.scene.start('playGame');
   }
   gameWin() {
     alert('YOU WON!!! YOU ARE A FRIEND OF THE CARTEL!! WOOHOO!!!!! $$$$$$$');
@@ -238,15 +251,15 @@ class Scene2 extends Phaser.Scene {
     this.laloScore = 10000;
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
   }
-  addAgent(){
-      var newAgent = this.physics.add.image(380, 350, 'agent');
-      newAgent.setVelocity(10);
-      newAgent.setBounce(.9);
-      newAgent.setCollideWorldBounds(true);
-      this.enemies.add(newAgent);
-      this.added = true;
+  addAgent() {
+    var newAgent = this.physics.add.image(380, 350, 'agent');
+    newAgent.setVelocity(10);
+    newAgent.setBounce(0.9);
+    newAgent.setCollideWorldBounds(true);
+    this.enemies.add(newAgent);
+    this.added = true;
   }
-  addCarole(){
+  addCarole() {
     this.coolcats.play();
     var bitchConfig = {
       mute: false,
@@ -258,11 +271,10 @@ class Scene2 extends Phaser.Scene {
       delay: 2,
     };
     this.ohno.play(bitchConfig);
-      
+
     var newCarole = this.physics.add.image(320, 150, 'carole');
     newCarole.setVelocityX(-85);
     newCarole.setBounce(1);
     this.enemies.add(newCarole);
   }
-
 }
