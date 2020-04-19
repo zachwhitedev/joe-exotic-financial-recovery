@@ -224,7 +224,7 @@ class Scene2 extends Phaser.Scene {
       delay: 0,
     };
     this.neverRecover.play(recoverConfig);
-    alert('Game over!');
+    alert('Game over! SOCRE: ' + this.totalScore);
     this.player.x = 22;
     this.player.y = 120;
     this.laloScore = 10000;
