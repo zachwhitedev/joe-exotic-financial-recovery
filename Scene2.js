@@ -187,7 +187,7 @@ class Scene2 extends Phaser.Scene {
     this.music = this.sound.add('music');
     var musicConfig = {
       mute: false,
-      volume: 0.4,
+      volume: 0.1,
       rate: 1,
       detune: 0,
       seek: 0,
@@ -198,7 +198,7 @@ class Scene2 extends Phaser.Scene {
   }
 
   update() {
-    if(this.totalScore % 500 == 0 && this.totalScore != 0){
+    if(this.totalScore % 750 == 0){
       this.sendCopCar();
     }
     if (this.totalScore % 3000 == 0 && this.totalScore != 0) {
@@ -263,19 +263,7 @@ class Scene2 extends Phaser.Scene {
     this.laloScore -= 1000;
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
     tiger.destroy();
-    var x =
-      this.player.x < 200
-        ? Phaser.Math.Between(260, 380)
-        : Phaser.Math.Between(20, 110);
-    var y =
-      this.player.y < 150
-        ? Phaser.Math.Between(250, 290)
-        : Phaser.Math.Between(10, 110);
-    var newTiger = this.physics.add.image(x, y, 'tiger');
-    newTiger.setVelocity(20);
-    newTiger.setBounce(1);
-    newTiger.setCollideWorldBounds(true);
-    this.tigers.add(newTiger);
+    this.time.addEvent({ delay: 3000, callback: this.addTiger, callbackScope: this, loop: false });
   }
 
   gameLose() {
@@ -315,7 +303,7 @@ class Scene2 extends Phaser.Scene {
 
   sendCopCar(){
     var copCar = this.physics.add.image(-25, 193, 'copcar');
-    copCar.setVelocityX(120);
+    copCar.setVelocityX(135);
     copCar.setBounce(0);
     copCar.setCollideWorldBounds(false);
     this.copCars.add(copCar);
