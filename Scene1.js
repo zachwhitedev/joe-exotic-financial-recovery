@@ -39,6 +39,9 @@ class Scene1 extends Phaser.Scene {
     this.load.audio('coolcats', 
       'assets/sounds/coolcats.mp3',
     );
+    this.load.audio('revolver', 
+      'assets/sounds/revolver.mp3',
+    );
   }
 
   create() {

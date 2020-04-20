@@ -18,6 +18,8 @@ class Bullet extends Phaser.GameObjects.Sprite{
   
       // 4.2 add the beam to the projectiles group
       scene.projectiles.add(this);
+      let sound = this.scene.revolver;
+      sound.play();
     }
   
   

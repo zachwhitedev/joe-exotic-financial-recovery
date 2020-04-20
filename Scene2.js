@@ -214,6 +214,7 @@ class Scene2 extends Phaser.Scene {
     //////// sfx ///////////
 
     this.ohno = this.sound.add('itscarole');
+    this.revolver = this.sound.add('revolver');
     this.neverRecover = this.sound.add('neverRecover');
     this.coolcats = this.sound.add('coolcats');
     this.music = this.sound.add('music');
