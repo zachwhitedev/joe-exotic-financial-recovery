@@ -121,7 +121,6 @@ class Scene2 extends Phaser.Scene {
     this.physics.add.collider(this.buildings, this.player);
     this.physics.add.collider(this.enemies, this.buildings);
     this.physics.add.collider(this.enemies, this.enemies);
-    this.physics.add.collider(this.enemies, this.player);
 
     this.physics.add.overlap(
       this.player,
@@ -146,6 +145,13 @@ class Scene2 extends Phaser.Scene {
     );
     this.physics.add.overlap(
       this.copCars,
+      this.player,
+      this.gameLose,
+      null,
+      this
+    );
+    this.physics.add.overlap(
+      this.enemies,
       this.player,
       this.gameLose,
       null,
