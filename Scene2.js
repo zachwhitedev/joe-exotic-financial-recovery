@@ -282,8 +282,7 @@ class Scene2 extends Phaser.Scene {
         console.log(content);
       })();
     }
-    this.music.pause();
-    this.ohno.pause();
+    this.killLiveMusic();
     var recoverConfig = {
       mute: false,
       volume: 8,
@@ -336,10 +335,17 @@ class Scene2 extends Phaser.Scene {
       delay: 2,
     };
     this.ohno.play(bitchConfig);
-
+    
     var newCarole = this.physics.add.image(320, 150, 'carole');
     newCarole.setVelocityX(-85);
     newCarole.setBounce(1);
     this.enemies.add(newCarole);
+  }
+  
+  killLiveMusic(){
+    this.music.stop();
+    this.ohno.stop();
+    this.coolcats.stop();
+    this.time.addEvent({ delay: 1000, callback: this.killLiveMusic, callbackScope: this, loop: false });
   }
 }
