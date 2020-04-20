@@ -243,9 +243,9 @@ class Scene2 extends Phaser.Scene {
     if (this.totalScore % 750 == 0) {
       this.sendCopCar();
     }
-    if (this.totalScore % 500 == 0 && this.totalScore != 0) {
+    if (this.totalScore % 900 == 0 && this.totalScore != 0) {
       this.addCarole();
-    } else if (this.totalScore % 1000 == 0 && this.totalScore != 0) {
+    } else if (this.totalScore % 1500 == 0 && this.totalScore != 0) {
       this.addAgent();
       this.addTiger();
     }
@@ -283,6 +283,8 @@ class Scene2 extends Phaser.Scene {
 
   hitEnemy(projectile, enemy) {
     this.takeThat.play();
+    this.coolcats.stop();
+    this.killCarole.stop();
     projectile.destroy();
     enemy.destroy();
     this.time.addEvent({
