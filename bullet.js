@@ -3,7 +3,7 @@
 class Bullet extends Phaser.GameObjects.Sprite{
     constructor(scene){
   
-      var x = scene.player.x + 3;
+      var x = scene.player.x + 8;
       var y = scene.player.y;
   
       super(scene, x, y, "bullet");
