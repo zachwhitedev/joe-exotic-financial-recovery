@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   if(localStorage.getItem('username')){
     let username = localStorage.getItem('username');
     let showUsername = document.getElementById('show-username');
-    showUsername.innerHTML = `Welcome, ${username}`;
+    showUsername.innerHTML = `Welcome, ${username}. Whether you're broke as sh*t, try drugs, or have kinky sex, we love and accept you.`;
   }
 });
 
