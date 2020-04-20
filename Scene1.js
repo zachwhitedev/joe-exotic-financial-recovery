@@ -7,6 +7,8 @@ class Scene1 extends Phaser.Scene {
     this.load.image('mainMenu', 'assets/images/mainMenu.png');
     this.load.image('background', 'assets/images/asphalt.png');
     this.load.image('playButton', 'assets/images/play-button.png');
+    this.load.image('zooSign', 'assets/images/zooSign.png');
+    this.load.image('signPost', 'assets/images/signPost.png');
     this.load.image('bank', 'assets/images/bank.png');
     this.load.image('houseyellow', 'assets/images/houseyellow.png');
     this.load.image('houseblue', 'assets/images/houseblue.png');
@@ -18,6 +20,9 @@ class Scene1 extends Phaser.Scene {
     this.load.image('carole', 'assets/images/carole.png');
     this.load.image('tiger', 'assets/images/tiger.png');
     this.load.image('agent', 'assets/images/agent.png');
+    this.load.image('zooHut', 'assets/images/zooHut.png');
+    this.load.image('cafe', 'assets/images/cafe.png');
+    this.load.image('copcar', 'assets/images/copcar.png');
     this.load.audio('music', 
       'assets/sounds/theme.mp3',
     );

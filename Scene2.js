@@ -38,6 +38,8 @@ class Scene2 extends Phaser.Scene {
 
     ///////////// BUILDINGS /////////////////
     this.bank = this.add.image(120, 245, 'bank');
+    this.cafe = this.add.image(224, 252, 'cafe');
+    this.zooHut = this.add.image(122, 94, 'zooHut');
     this.houseyellow = this.add.image(105, 32, 'houseyellow');
     this.houseyellow2 = this.add.image(320, 32, 'houseyellow');
     this.houseblue = this.add.image(368, 32, 'houseblue');
@@ -45,15 +47,37 @@ class Scene2 extends Phaser.Scene {
     this.housepink = this.add.image(185, 32, 'housepink');
     this.walmart = this.add.image(371, 116, 'walmart');
 
-    this.vertwall = this.add.image(162, 96, 'vertwall'); //
-    this.vertwall2 = this.add.image(162, 136, 'vertwall'); //
+    this.signPost = this.add.image(121, 149, 'signPost');
+    this.signPost.setSize(6, 29);
+    this.zooSign = this.add.image(120, 130, 'zooSign');
+    this.zooSign.setScale(.55);
+    this.signPost.setScale(.5);
+    this.zooSign.angle -= 5;
+
+    this.topBarrier = this.add.image(20, 8, 'horwall');
+    this.topBarrier2 = this.add.image(190, 8, 'horwall');
+    this.topBarrier3 = this.add.image(326, 8, 'horwall');
+    this.topBarrier.setSize(110, 6);
+    this.topBarrier2.setSize(62, 6);
+    this.topBarrier3.setSize(90, 6);
+    
+    this.vertwall = this.add.image(162, 96, 'vertwall'); 
+    this.vertwall.setSize(6, 35); //
+    this.vertwall2 = this.add.image(162, 136, 'vertwall');
+    this.vertwall2.setSize(6, 35); //
     this.vertwall3 = this.add.image(252, 96, 'vertwall');
+    this.vertwall3.setSize(6, 35); //
     this.vertwall4 = this.add.image(252, 134, 'vertwall');
+    this.vertwall4.setSize(6, 35); //
 
     this.horwall = this.add.image(186, 154, 'horwall');
+    this.horwall.setSize(38, 6);
     this.horwall2 = this.add.image(230, 154, 'horwall');
+    this.horwall2.setSize(38, 6);
     this.horwall3 = this.add.image(186, 82, 'horwall');
+    this.horwall3.setSize(38, 6);
     this.horwall4 = this.add.image(230, 82, 'horwall');
+    this.horwall4.setSize(38, 6);
 
     this.buildings = this.physics.add.staticGroup();
     this.buildings.add(this.bank);
@@ -71,6 +95,12 @@ class Scene2 extends Phaser.Scene {
     this.buildings.add(this.horwall2);
     this.buildings.add(this.horwall3);
     this.buildings.add(this.horwall4);
+    this.buildings.add(this.signPost);
+    this.buildings.add(this.topBarrier);
+    this.buildings.add(this.topBarrier2);
+    this.buildings.add(this.topBarrier3);
+    this.buildings.add(this.zooHut);
+    this.buildings.add(this.cafe);
     /////////////////////////////////////////
 
     this.tigers = this.add.group();
@@ -80,9 +110,11 @@ class Scene2 extends Phaser.Scene {
 
     this.enemies = this.add.group();
     this.enemies.add(this.agent);
+    this.copCars = this.add.group();
 
     this.agent.setVelocity(-10, 10);
     this.agent.setBounce(0.9);
+
 
     this.physics.add.collider(this.tigers, this.tigers);
     this.physics.add.collider(this.tigers, this.buildings);
@@ -102,6 +134,20 @@ class Scene2 extends Phaser.Scene {
       this.enemies,
       this.tigers,
       this.fedsTakeTiger,
+      null,
+      this
+    );
+    this.physics.add.overlap(
+      this.copCars,
+      this.tigers,
+      this.fedsTakeTiger,
+      null,
+      this
+    );
+    this.physics.add.overlap(
+      this.copCars,
+      this.player,
+      this.gameLose,
       null,
       this
     );
@@ -152,10 +198,14 @@ class Scene2 extends Phaser.Scene {
   }
 
   update() {
-    if (this.totalScore % 2750 == 0 && this.totalScore != 0) {
+    if(this.totalScore % 500 == 0 && this.totalScore != 0){
+      this.sendCopCar();
+    }
+    if (this.totalScore % 3000 == 0 && this.totalScore != 0) {
       this.addCarole();
-    } else if (this.totalScore % 1000 == 0 && this.totalScore != 0) {
+    } else if (this.totalScore % 1500 == 0 && this.totalScore != 0) {
       this.addAgent();
+      this.addTiger();
     }
     this.totalScore += 1;
     this.totalScoreLabel.text = 'SCORE: ' + this.totalScore;
@@ -187,9 +237,13 @@ class Scene2 extends Phaser.Scene {
     this.laloScore += 1000;
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
 
-    tiger.x = 200;
-    tiger.y = 128;
+    tiger.x = Phaser.Math.Between(190, 230);
+    tiger.y = Phaser.Math.Between(100, 132);
     tiger.setVelocity(2);
+    this.time.addEvent({ delay: 3000, callback: this.addTiger, callbackScope: this, loop: false });
+  }
+  
+  addTiger(){
     var x =
       this.player.x < 200
         ? Phaser.Math.Between(330, 380)
@@ -257,8 +311,16 @@ class Scene2 extends Phaser.Scene {
     newAgent.setBounce(0.9);
     newAgent.setCollideWorldBounds(true);
     this.enemies.add(newAgent);
-    this.added = true;
   }
+
+  sendCopCar(){
+    var copCar = this.physics.add.image(-25, 193, 'copcar');
+    copCar.setVelocityX(120);
+    copCar.setBounce(0);
+    copCar.setCollideWorldBounds(false);
+    this.copCars.add(copCar);
+  }
+
   addCarole() {
     this.coolcats.play();
     var bitchConfig = {
