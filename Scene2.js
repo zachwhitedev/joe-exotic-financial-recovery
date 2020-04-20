@@ -203,7 +203,7 @@ class Scene2 extends Phaser.Scene {
     }
     if (this.totalScore % 3000 == 0 && this.totalScore != 0) {
       this.addCarole();
-    } else if (this.totalScore % 1500 == 0 && this.totalScore != 0) {
+    } else if (this.totalScore % 1000 == 0 && this.totalScore != 0) {
       this.addAgent();
       this.addTiger();
     }
@@ -267,6 +267,7 @@ class Scene2 extends Phaser.Scene {
   }
 
   gameLose() {
+    this.killLiveMusic();
     if(localStorage.getItem('username')){
       (async () => {
         const rawResponse = await fetch('https://www.v8asdfhajkfh.org/tigerleaderboard', {
@@ -282,7 +283,6 @@ class Scene2 extends Phaser.Scene {
         console.log(content);
       })();
     }
-    this.killLiveMusic();
     var recoverConfig = {
       mute: false,
       volume: 8,
@@ -321,6 +321,7 @@ class Scene2 extends Phaser.Scene {
     copCar.setBounce(0);
     copCar.setCollideWorldBounds(false);
     this.copCars.add(copCar);
+    this.addTiger();
   }
 
   addCarole() {
@@ -340,12 +341,16 @@ class Scene2 extends Phaser.Scene {
     newCarole.setVelocityX(-85);
     newCarole.setBounce(1);
     this.enemies.add(newCarole);
+    this.addTiger();
   }
   
   killLiveMusic(){
     this.music.stop();
     this.ohno.stop();
     this.coolcats.stop();
-    this.time.addEvent({ delay: 1000, callback: this.killLiveMusic, callbackScope: this, loop: false });
+    this.music.pause();
+    this.ohno.pause();
+    this.coolcats.pause();
+    this.time.addEvent({ delay: 3000, callback: this.killLiveMusic, callbackScope: this, loop: false });
   }
 }
