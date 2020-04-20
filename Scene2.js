@@ -8,7 +8,7 @@ class Scene2 extends Phaser.Scene {
   create() {
 
     this.time.addEvent({
-      delay: 2500,
+      delay: 3000,
       callback: this.youTouchMyTiger,
       callbackScope: this,
       loop: false,
