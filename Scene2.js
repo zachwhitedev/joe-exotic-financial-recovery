@@ -7,13 +7,7 @@ class Scene2 extends Phaser.Scene {
   
   create() {
 
-    this.time.addEvent({
-      delay: 3000,
-      callback: this.youTouchMyTiger,
-      callbackScope: this,
-      loop: false,
-    });
-
+    
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
     
@@ -136,22 +130,28 @@ class Scene2 extends Phaser.Scene {
             fontSize: '12px',
             fill: 'lime',
           }
-        );
-        this.totalScore = 0;
-        this.totalScoreLabel = this.add.text(290, 5, 'SCORE: ' + this.totalScore, {
-          fontSize: '12px',
-          fill: 'lime',
-        });
-        ///////////////////////////////
-        
-        this.tigers = this.add.group();
-        this.tigers.add(this.tiger);
-    this.tigers.add(this.tiger2);
-    this.tigers.add(this.tiger3);
-
-    this.enemies = this.add.group();
-    this.enemies.add(this.agent);
-    this.copCars = this.add.group();
+          );
+          this.totalScore = 0;
+          this.totalScoreLabel = this.add.text(290, 5, 'SCORE: ' + this.totalScore, {
+            fontSize: '12px',
+            fill: 'lime',
+          });
+          ///////////////////////////////
+          this.time.addEvent({
+            delay: 3000,
+            callback: this.youTouchMyTiger,
+            callbackScope: this,
+            loop: false,
+          });
+          
+          this.tigers = this.add.group();
+          this.tigers.add(this.tiger);
+          this.tigers.add(this.tiger2);
+          this.tigers.add(this.tiger3);
+          
+          this.enemies = this.add.group();
+          this.enemies.add(this.agent);
+          this.copCars = this.add.group();
 
     this.agent.setVelocity(-10, 10);
     this.agent.setBounce(0.9);
@@ -355,6 +355,7 @@ class Scene2 extends Phaser.Scene {
   }
 
   gameLose() {
+    alert('Game over! YOUR SCORE: ' + this.totalScore);
     this.killLiveMusic();
     if (localStorage.getItem('username')) {
       (async () => {
@@ -372,9 +373,6 @@ class Scene2 extends Phaser.Scene {
             }),
           }
         );
-        const content = await rawResponse.json();
-
-        console.log(content);
       })();
     }
     var recoverConfig = {
@@ -388,7 +386,6 @@ class Scene2 extends Phaser.Scene {
     };
     this.neverRecover.play(recoverConfig);
     this.scene.start('playGame');
-    alert('Game over! YOUR SCORE: ' + this.totalScore);
   }
   gameWin() {
     alert('YOU WON!!! YOU ARE A FRIEND OF THE CARTEL!! WOOHOO!!!!! $$$$$$$');
