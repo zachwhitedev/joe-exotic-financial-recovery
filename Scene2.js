@@ -241,7 +241,7 @@ class Scene2 extends Phaser.Scene {
     if (this.totalScore % 750 == 0) {
       this.sendCopCar();
     }
-    if (this.totalScore % 3000 == 0 && this.totalScore != 0) {
+    if (this.totalScore % 2000 == 0 && this.totalScore != 0) {
       this.addCarole();
     } else if (this.totalScore % 1000 == 0 && this.totalScore != 0) {
       this.addAgent();
@@ -400,7 +400,7 @@ class Scene2 extends Phaser.Scene {
     this.copCars.add(copCar);
     this.addTiger();
   }
-
+  
   addCarole() {
     this.coolcats.play();
     var bitchConfig = {
@@ -413,10 +413,11 @@ class Scene2 extends Phaser.Scene {
       delay: 2,
     };
     this.ohno.play(bitchConfig);
-
-    var newCarole = this.physics.add.image(320, 150, 'carole');
+    
+    var newCarole = this.physics.add.image(415, 56, 'carole');
     newCarole.setVelocityX(-85);
     newCarole.setBounce(1);
+    newCarole.setCollideWorldBounds(true);
     this.enemies.add(newCarole);
     this.addTiger();
   }
