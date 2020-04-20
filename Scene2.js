@@ -355,8 +355,17 @@ class Scene2 extends Phaser.Scene {
   }
 
   gameLose() {
-    alert('Game over! YOUR SCORE: ' + this.totalScore);
     this.killLiveMusic();
+    var recoverConfig = {
+      mute: false,
+      volume: 8,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0,
+    };
+    this.neverRecover.play(recoverConfig);
     if (localStorage.getItem('username')) {
       (async () => {
         const rawResponse = await fetch(
@@ -372,20 +381,11 @@ class Scene2 extends Phaser.Scene {
               score: this.laloScore,
             }),
           }
-        );
-      })();
-    }
-    var recoverConfig = {
-      mute: false,
-      volume: 8,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0,
-    };
-    this.neverRecover.play(recoverConfig);
-    this.scene.start('playGame');
+          );
+        })();
+      }
+    alert('Game over! YOUR SCORE: ' + this.totalScore);
+    this.scene.start('bootGame');
   }
   gameWin() {
     alert('YOU WON!!! YOU ARE A FRIEND OF THE CARTEL!! WOOHOO!!!!! $$$$$$$');
