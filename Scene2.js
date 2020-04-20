@@ -288,7 +288,7 @@ class Scene2 extends Phaser.Scene {
     projectile.destroy();
     enemy.destroy();
     this.time.addEvent({
-      delay: 3000,
+      delay: 8000,
       callback: this.addAgent,
       callbackScope: this,
       loop: false,
