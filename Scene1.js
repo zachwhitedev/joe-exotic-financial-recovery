@@ -8,6 +8,7 @@ class Scene1 extends Phaser.Scene {
     this.load.image('background', 'assets/images/asphalt.png');
     this.load.image('playButton', 'assets/images/play-button.png');
     this.load.image('zooSign', 'assets/images/zooSign.png');
+    this.load.image('bullet', 'assets/images/bullet.png');
     this.load.image('signPost', 'assets/images/signPost.png');
     this.load.image('bank', 'assets/images/bank.png');
     this.load.image('houseyellow', 'assets/images/houseyellow.png');

@@ -13,6 +13,11 @@ class Scene2 extends Phaser.Scene {
     this.player = this.physics.add.image(30, 35, 'player');
     this.player.setCollideWorldBounds(true);
 
+    this.spacebar = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
+    this.projectiles = this.add.group();
+
     //////// INITIAL TIGERS ////////
     this.tiger = this.physics.add.image(300, 100, 'tiger');
     this.tiger.setCollideWorldBounds(true);
@@ -50,8 +55,8 @@ class Scene2 extends Phaser.Scene {
     this.signPost = this.add.image(121, 149, 'signPost');
     this.signPost.setSize(6, 29);
     this.zooSign = this.add.image(120, 130, 'zooSign');
-    this.zooSign.setScale(.55);
-    this.signPost.setScale(.5);
+    this.zooSign.setScale(0.55);
+    this.signPost.setScale(0.5);
     this.zooSign.angle -= 5;
 
     this.topBarrier = this.add.image(20, 8, 'horwall');
@@ -60,8 +65,8 @@ class Scene2 extends Phaser.Scene {
     this.topBarrier.setSize(110, 6);
     this.topBarrier2.setSize(62, 6);
     this.topBarrier3.setSize(90, 6);
-    
-    this.vertwall = this.add.image(162, 96, 'vertwall'); 
+
+    this.vertwall = this.add.image(162, 96, 'vertwall');
     this.vertwall.setSize(6, 35); //
     this.vertwall2 = this.add.image(162, 136, 'vertwall');
     this.vertwall2.setSize(6, 35); //
@@ -115,7 +120,6 @@ class Scene2 extends Phaser.Scene {
     this.agent.setVelocity(-10, 10);
     this.agent.setBounce(0.9);
 
-
     this.physics.add.collider(this.tigers, this.tigers);
     this.physics.add.collider(this.tigers, this.buildings);
     this.physics.add.collider(this.buildings, this.player);
@@ -157,6 +161,28 @@ class Scene2 extends Phaser.Scene {
       null,
       this
     );
+    this.physics.add.overlap(
+      this.projectiles,
+      this.enemies,
+      this.hitEnemy,
+      null,
+      this
+    );
+    this.physics.add.overlap(
+      this.projectiles,
+      this.tigers,
+      this.noHit,
+      null,
+      this
+    );
+    this.physics.add.overlap(
+      this.projectiles,
+      this.buildings,
+      this.noHit,
+      null,
+      this
+    );
+
 
     //////// score label ///////
     this.graphics = this.add.graphics();
@@ -204,7 +230,14 @@ class Scene2 extends Phaser.Scene {
   }
 
   update() {
-    if(this.totalScore % 750 == 0){
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+      this.shootBeam();
+    }
+    for (var i = 0; i < this.projectiles.getChildren().length; i++) {
+      var beam = this.projectiles.getChildren()[i];
+      beam.update();
+    }
+    if (this.totalScore % 750 == 0) {
       this.sendCopCar();
     }
     if (this.totalScore % 3000 == 0 && this.totalScore != 0) {
@@ -239,6 +272,26 @@ class Scene2 extends Phaser.Scene {
     }
   }
 
+  shootBeam() {
+    if (this.player.active) {
+      var bullet = new Bullet(this);
+    }
+  }
+
+  hitEnemy(projectile, enemy) {
+    projectile.destroy();
+    enemy.destroy();
+    this.time.addEvent({
+      delay: 3000,
+      callback: this.addAgent,
+      callbackScope: this,
+      loop: false,
+    });
+  }
+  noHit(projectile, enemy) {
+    projectile.destroy();
+  }
+
   collectTiger(player, tiger) {
     this.laloScore += 1000;
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
@@ -246,10 +299,15 @@ class Scene2 extends Phaser.Scene {
     tiger.x = Phaser.Math.Between(190, 230);
     tiger.y = Phaser.Math.Between(100, 132);
     tiger.setVelocity(2);
-    this.time.addEvent({ delay: 3000, callback: this.addTiger, callbackScope: this, loop: false });
+    this.time.addEvent({
+      delay: 3000,
+      callback: this.addTiger,
+      callbackScope: this,
+      loop: false,
+    });
   }
-  
-  addTiger(){
+
+  addTiger() {
     var x =
       this.player.x < 200
         ? Phaser.Math.Between(330, 380)
@@ -269,23 +327,34 @@ class Scene2 extends Phaser.Scene {
     this.laloScore -= 1000;
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
     tiger.destroy();
-    this.time.addEvent({ delay: 3000, callback: this.addTiger, callbackScope: this, loop: false });
+    this.time.addEvent({
+      delay: 3000,
+      callback: this.addTiger,
+      callbackScope: this,
+      loop: false,
+    });
   }
 
   gameLose() {
     this.killLiveMusic();
-    if(localStorage.getItem('username')){
+    if (localStorage.getItem('username')) {
       (async () => {
-        const rawResponse = await fetch('https://www.v8asdfhajkfh.org/tigerleaderboard', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({username: localStorage.getItem('username'), score: this.laloScore })
-        });
+        const rawResponse = await fetch(
+          'https://www.v8asdfhajkfh.org/tigerleaderboard',
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: localStorage.getItem('username'),
+              score: this.laloScore,
+            }),
+          }
+        );
         const content = await rawResponse.json();
-      
+
         console.log(content);
       })();
     }
@@ -314,14 +383,15 @@ class Scene2 extends Phaser.Scene {
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
   }
   addAgent() {
-    var newAgent = this.physics.add.image(380, 350, 'agent');
-    newAgent.setVelocity(10);
-    newAgent.setBounce(0.9);
+    var newAgent = this.physics.add.image(Phaser.Math.Between(-10, 380), 350, 'agent');
+    newAgent.setVelocityY(-15);
+    newAgent.setVelocityX(15);
+    newAgent.setBounce(1);
     newAgent.setCollideWorldBounds(true);
     this.enemies.add(newAgent);
   }
 
-  sendCopCar(){
+  sendCopCar() {
     var copCar = this.physics.add.image(-25, 193, 'copcar');
     copCar.setVelocityX(135);
     copCar.setBounce(0);
@@ -342,21 +412,26 @@ class Scene2 extends Phaser.Scene {
       delay: 2,
     };
     this.ohno.play(bitchConfig);
-    
+
     var newCarole = this.physics.add.image(320, 150, 'carole');
     newCarole.setVelocityX(-85);
     newCarole.setBounce(1);
     this.enemies.add(newCarole);
     this.addTiger();
   }
-  
-  killLiveMusic(){
+
+  killLiveMusic() {
     this.music.stop();
     this.ohno.stop();
     this.coolcats.stop();
     this.music.pause();
     this.ohno.pause();
     this.coolcats.pause();
-    this.time.addEvent({ delay: 3000, callback: this.killLiveMusic, callbackScope: this, loop: false });
+    this.time.addEvent({
+      delay: 3000,
+      callback: this.killLiveMusic,
+      callbackScope: this,
+      loop: false,
+    });
   }
 }
