@@ -2,114 +2,142 @@ class Scene2 extends Phaser.Scene {
   constructor() {
     super('playGame');
   }
-
+  
   preload() {}
-
+  
   create() {
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
-
+    
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.image(30, 35, 'player');
     this.player.setCollideWorldBounds(true);
-
+    
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
-    this.projectiles = this.add.group();
-
-    //////// INITIAL TIGERS ////////
-    this.tiger = this.physics.add.image(300, 100, 'tiger');
-    this.tiger.setCollideWorldBounds(true);
-    this.tiger2 = this.physics.add.image(60, 120, 'tiger');
-    this.tiger2.setCollideWorldBounds(true);
-    this.tiger3 = this.physics.add.image(40, 240, 'tiger');
-    this.tiger3.setCollideWorldBounds(true);
-
-    this.tiger.setVelocity(Phaser.Math.Between(-20, 20), 20);
-    this.tiger.setBounce(1);
-    this.tiger2.setVelocity(Phaser.Math.Between(-20, 20), -20);
-    this.tiger2.setBounce(1);
-    this.tiger3.setVelocity(Phaser.Math.Between(-20, 20), 20);
-    this.tiger3.setBounce(1);
-    //////////////////////////////////
-
-    this.agent = this.physics.add.image(
-      300,
-      Phaser.Math.Between(280, 340),
-      'agent'
-    );
-    this.agent.setCollideWorldBounds(true);
-
-    ///////////// BUILDINGS /////////////////
-    this.bank = this.add.image(120, 245, 'bank');
-    this.cafe = this.add.image(224, 252, 'cafe');
-    this.zooHut = this.add.image(122, 94, 'zooHut');
-    this.houseyellow = this.add.image(105, 32, 'houseyellow');
-    this.houseyellow2 = this.add.image(320, 32, 'houseyellow');
-    this.houseblue = this.add.image(368, 32, 'houseblue');
-    this.houseblue2 = this.add.image(230, 32, 'houseblue');
-    this.housepink = this.add.image(185, 32, 'housepink');
-    this.walmart = this.add.image(371, 116, 'walmart');
-
-    this.signPost = this.add.image(121, 149, 'signPost');
-    this.signPost.setSize(6, 29);
-    this.zooSign = this.add.image(120, 130, 'zooSign');
-    this.zooSign.setScale(0.55);
-    this.signPost.setScale(0.5);
-    this.zooSign.angle -= 5;
-
-    this.topBarrier = this.add.image(20, 8, 'horwall');
-    this.topBarrier2 = this.add.image(190, 8, 'horwall');
-    this.topBarrier3 = this.add.image(326, 8, 'horwall');
-    this.topBarrier.setSize(110, 6);
-    this.topBarrier2.setSize(62, 6);
-    this.topBarrier3.setSize(90, 6);
-
-    this.vertwall = this.add.image(162, 96, 'vertwall');
-    this.vertwall.setSize(6, 35); //
-    this.vertwall2 = this.add.image(162, 136, 'vertwall');
-    this.vertwall2.setSize(6, 35); //
-    this.vertwall3 = this.add.image(252, 96, 'vertwall');
-    this.vertwall3.setSize(6, 35); //
-    this.vertwall4 = this.add.image(252, 134, 'vertwall');
-    this.vertwall4.setSize(6, 35); //
-
-    this.horwall = this.add.image(186, 154, 'horwall');
-    this.horwall.setSize(38, 6);
-    this.horwall2 = this.add.image(230, 154, 'horwall');
-    this.horwall2.setSize(38, 6);
-    this.horwall3 = this.add.image(186, 82, 'horwall');
-    this.horwall3.setSize(38, 6);
-    this.horwall4 = this.add.image(230, 82, 'horwall');
-    this.horwall4.setSize(38, 6);
-
-    this.buildings = this.physics.add.staticGroup();
-    this.buildings.add(this.bank);
-    this.buildings.add(this.houseyellow);
-    this.buildings.add(this.houseyellow2);
-    this.buildings.add(this.houseblue);
-    this.buildings.add(this.houseblue2);
-    this.buildings.add(this.housepink);
-    this.buildings.add(this.walmart);
-    this.buildings.add(this.vertwall);
-    this.buildings.add(this.vertwall2);
-    this.buildings.add(this.vertwall3);
-    this.buildings.add(this.vertwall4);
-    this.buildings.add(this.horwall);
-    this.buildings.add(this.horwall2);
-    this.buildings.add(this.horwall3);
-    this.buildings.add(this.horwall4);
-    this.buildings.add(this.signPost);
-    this.buildings.add(this.topBarrier);
-    this.buildings.add(this.topBarrier2);
-    this.buildings.add(this.topBarrier3);
-    this.buildings.add(this.zooHut);
-    this.buildings.add(this.cafe);
-    /////////////////////////////////////////
-
-    this.tigers = this.add.group();
-    this.tigers.add(this.tiger);
+      );
+      this.projectiles = this.add.group();
+      
+      //////// INITIAL TIGERS ////////
+      this.tiger = this.physics.add.image(300, 100, 'tiger');
+      this.tiger.setCollideWorldBounds(true);
+      this.tiger2 = this.physics.add.image(60, 120, 'tiger');
+      this.tiger2.setCollideWorldBounds(true);
+      this.tiger3 = this.physics.add.image(40, 240, 'tiger');
+      this.tiger3.setCollideWorldBounds(true);
+      
+      this.tiger.setVelocity(Phaser.Math.Between(-20, 20), 20);
+      this.tiger.setBounce(1);
+      this.tiger2.setVelocity(Phaser.Math.Between(-20, 20), -20);
+      this.tiger2.setBounce(1);
+      this.tiger3.setVelocity(Phaser.Math.Between(-20, 20), 20);
+      this.tiger3.setBounce(1);
+      //////////////////////////////////
+      
+      this.agent = this.physics.add.image(
+        300,
+        Phaser.Math.Between(280, 340),
+        'agent'
+        );
+        this.agent.setCollideWorldBounds(true);
+        
+        ///////////// BUILDINGS /////////////////
+        this.bank = this.add.image(120, 245, 'bank');
+        this.cafe = this.add.image(224, 252, 'cafe');
+        this.zooHut = this.add.image(122, 94, 'zooHut');
+        this.houseyellow = this.add.image(105, 32, 'houseyellow');
+        this.houseyellow2 = this.add.image(320, 32, 'houseyellow');
+        this.houseblue = this.add.image(368, 32, 'houseblue');
+        this.houseblue2 = this.add.image(230, 32, 'houseblue');
+        this.housepink = this.add.image(185, 32, 'housepink');
+        this.walmart = this.add.image(371, 116, 'walmart');
+        
+        this.signPost = this.add.image(121, 149, 'signPost');
+        this.signPost.setSize(6, 29);
+        this.zooSign = this.add.image(120, 130, 'zooSign');
+        this.zooSign.setScale(0.55);
+        this.signPost.setScale(0.5);
+        this.zooSign.angle -= 5;
+        
+        this.topBarrier = this.add.image(20, 8, 'horwall');
+        this.topBarrier2 = this.add.image(190, 8, 'horwall');
+        this.topBarrier3 = this.add.image(326, 8, 'horwall');
+        this.topBarrier.setSize(110, 6);
+        this.topBarrier2.setSize(62, 6);
+        this.topBarrier3.setSize(90, 6);
+        
+        this.vertwall = this.add.image(162, 96, 'vertwall');
+        this.vertwall.setSize(6, 35); //
+        this.vertwall2 = this.add.image(162, 136, 'vertwall');
+        this.vertwall2.setSize(6, 35); //
+        this.vertwall3 = this.add.image(252, 96, 'vertwall');
+        this.vertwall3.setSize(6, 35); //
+        this.vertwall4 = this.add.image(252, 134, 'vertwall');
+        this.vertwall4.setSize(6, 35); //
+        
+        this.horwall = this.add.image(186, 154, 'horwall');
+        this.horwall.setSize(38, 6);
+        this.horwall2 = this.add.image(230, 154, 'horwall');
+        this.horwall2.setSize(38, 6);
+        this.horwall3 = this.add.image(186, 82, 'horwall');
+        this.horwall3.setSize(38, 6);
+        this.horwall4 = this.add.image(230, 82, 'horwall');
+        this.horwall4.setSize(38, 6);
+        
+        this.buildings = this.physics.add.staticGroup();
+        this.buildings.add(this.bank);
+        this.buildings.add(this.houseyellow);
+        this.buildings.add(this.houseyellow2);
+        this.buildings.add(this.houseblue);
+        this.buildings.add(this.houseblue2);
+        this.buildings.add(this.housepink);
+        this.buildings.add(this.walmart);
+        this.buildings.add(this.vertwall);
+        this.buildings.add(this.vertwall2);
+        this.buildings.add(this.vertwall3);
+        this.buildings.add(this.vertwall4);
+        this.buildings.add(this.horwall);
+        this.buildings.add(this.horwall2);
+        this.buildings.add(this.horwall3);
+        this.buildings.add(this.horwall4);
+        this.buildings.add(this.signPost);
+        this.buildings.add(this.topBarrier);
+        this.buildings.add(this.topBarrier2);
+        this.buildings.add(this.topBarrier3);
+        this.buildings.add(this.zooHut);
+        this.buildings.add(this.cafe);
+        /////////////////////////////////////////
+        
+        //////// score label ///////
+        this.graphics = this.add.graphics();
+        this.graphics.fillStyle(0x000000, 1);
+        this.graphics.beginPath();
+        this.graphics.moveTo(0, 0);
+        this.graphics.lineTo(config.width, 0);
+        this.graphics.lineTo(config.width, 20);
+        this.graphics.lineTo(0, 20);
+        this.graphics.lineTo(0, 0);
+        this.graphics.closePath();
+        this.graphics.fillPath();
+        this.laloScore = 10000;
+        this.laloScoreLabel = this.add.text(
+          5,
+          5,
+          'Joe Exotic Net Worth: $' + this.laloScore,
+          {
+            fontSize: '12px',
+            fill: 'lime',
+          }
+        );
+        this.totalScore = 0;
+        this.totalScoreLabel = this.add.text(290, 5, 'SCORE: ' + this.totalScore, {
+          fontSize: '12px',
+          fill: 'lime',
+        });
+        ///////////////////////////////
+        
+        this.tigers = this.add.group();
+        this.tigers.add(this.tiger);
     this.tigers.add(this.tiger2);
     this.tigers.add(this.tiger3);
 
@@ -184,37 +212,10 @@ class Scene2 extends Phaser.Scene {
     );
 
 
-    //////// score label ///////
-    this.graphics = this.add.graphics();
-    this.graphics.fillStyle(0x000000, 1);
-    this.graphics.beginPath();
-    this.graphics.moveTo(0, 0);
-    this.graphics.lineTo(config.width, 0);
-    this.graphics.lineTo(config.width, 20);
-    this.graphics.lineTo(0, 20);
-    this.graphics.lineTo(0, 0);
-    this.graphics.closePath();
-    this.graphics.fillPath();
-    this.laloScore = 10000;
-    this.laloScoreLabel = this.add.text(
-      5,
-      5,
-      'Joe Exotic Net Worth: $' + this.laloScore,
-      {
-        fontSize: '12px',
-        fill: 'lime',
-      }
-    );
-    this.totalScore = 0;
-    this.totalScoreLabel = this.add.text(290, 5, 'SCORE: ' + this.totalScore, {
-      fontSize: '12px',
-      fill: 'lime',
-    });
-
-    //////// sfx ///////////
-
+    ////////////// sfx //////////////////////
     this.ohno = this.sound.add('itscarole');
     this.killCarole = this.sound.add('killCarole');
+    this.touchMyTiger = this.sound.add('touchMyTiger');
     this.revolver = this.sound.add('revolver');
     this.neverRecover = this.sound.add('neverRecover');
     this.takeThat = this.sound.add('takeThat');
@@ -231,8 +232,15 @@ class Scene2 extends Phaser.Scene {
     };
     this.music.play(musicConfig);
   }
+  /////////////////////////////
 
   update() {
+    if(this.totalScore == 0){
+      var touchconfig = {
+        volume: .4
+      }
+      this.touchMyTiger.play(touchconfig);
+    }
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.shootBeam();
     }
@@ -282,7 +290,10 @@ class Scene2 extends Phaser.Scene {
   }
 
   hitEnemy(projectile, enemy) {
-    this.takeThat.play();
+    config = {
+      volume: .5
+    }
+    this.takeThat.play(config);
     this.coolcats.stop();
     this.killCarole.stop();
     projectile.destroy();
@@ -428,6 +439,8 @@ class Scene2 extends Phaser.Scene {
   }
 
   killLiveMusic() {
+    this.killCarole.stop();
+    this.touchMyTiger.stop();
     this.music.stop();
     this.ohno.stop();
     this.coolcats.stop();
