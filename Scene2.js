@@ -267,6 +267,21 @@ class Scene2 extends Phaser.Scene {
   }
 
   gameLose() {
+    if(localStorage.getItem('username')){
+      (async () => {
+        const rawResponse = await fetch('https://www.v8asdfhajkfh.org/tigerleaderboard', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({username: localStorage.getItem('username'), score: this.laloScore })
+        });
+        const content = await rawResponse.json();
+      
+        console.log(content);
+      })();
+    }
     this.music.pause();
     this.ohno.pause();
     var recoverConfig = {

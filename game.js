@@ -14,4 +14,19 @@ var config = {
   }
 };
 
+
 var game = new Phaser.Game(config);
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  if(localStorage.getItem('username')){
+    let username = localStorage.getItem('username');
+    let showUsername = document.getElementById('show-username');
+    showUsername.innerHTML = `Welcome, ${username}`;
+  }
+});
+
+
+function setUsername(){
+  let username = document.forms[0].elements[0].value
+  localStorage.setItem('username', username.toString())
+}

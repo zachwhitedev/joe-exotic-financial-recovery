@@ -1,0 +1,54 @@
+#game-container {
+    display: block;
+    margin: 20px auto 0 auto;
+    padding: 0;
+    max-width: 802px;
+  }
+  #adv2 {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    width: 8%;
+  }
+  #adv3 {
+    position: absolute;
+    top: 200px;
+    right: 10px;
+    width: 8%;
+  }
+  #adv4 {
+    position: absolute;
+    top: 350px;
+    right: 10px;
+    width: 8%;
+  }
+  #adv5 {
+    position: absolute;
+    top: 500px;
+    right: 10px;
+    width: 8%;
+  }
+  #adv1 {
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    width: 8%;
+  }
+  #adv6 {
+    position: absolute;
+    top: 200px;
+    left: 10px;
+    width: 8%;
+  }
+  #adv7 {
+    position: absolute;
+    top: 350px;
+    left: 10px;
+    width: 8%;
+  }
+  #adv8 {
+    position: absolute;
+    top: 500px;
+    left: 10px;
+    width: 8%;
+  }
