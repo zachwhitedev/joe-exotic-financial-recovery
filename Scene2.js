@@ -214,8 +214,10 @@ class Scene2 extends Phaser.Scene {
     //////// sfx ///////////
 
     this.ohno = this.sound.add('itscarole');
+    this.killCarole = this.sound.add('killCarole');
     this.revolver = this.sound.add('revolver');
     this.neverRecover = this.sound.add('neverRecover');
+    this.takeThat = this.sound.add('takeThat');
     this.coolcats = this.sound.add('coolcats');
     this.music = this.sound.add('music');
     var musicConfig = {
@@ -241,7 +243,7 @@ class Scene2 extends Phaser.Scene {
     if (this.totalScore % 750 == 0) {
       this.sendCopCar();
     }
-    if (this.totalScore % 2000 == 0 && this.totalScore != 0) {
+    if (this.totalScore % 500 == 0 && this.totalScore != 0) {
       this.addCarole();
     } else if (this.totalScore % 1000 == 0 && this.totalScore != 0) {
       this.addAgent();
@@ -280,6 +282,7 @@ class Scene2 extends Phaser.Scene {
   }
 
   hitEnemy(projectile, enemy) {
+    this.takeThat.play();
     projectile.destroy();
     enemy.destroy();
     this.time.addEvent({
@@ -403,16 +406,16 @@ class Scene2 extends Phaser.Scene {
   
   addCarole() {
     this.coolcats.play();
-    var bitchConfig = {
+    var killCaroleConfig = {
       mute: false,
-      volume: 8,
+      volume: .7,
       rate: 1,
       detune: 0,
       seek: 0,
       loop: false,
-      delay: 2,
+      delay: 2
     };
-    this.ohno.play(bitchConfig);
+    this.killCarole.play(killCaroleConfig);
     
     var newCarole = this.physics.add.image(415, 56, 'carole');
     newCarole.setVelocityX(-85);
