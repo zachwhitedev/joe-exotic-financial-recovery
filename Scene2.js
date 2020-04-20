@@ -6,6 +6,14 @@ class Scene2 extends Phaser.Scene {
   preload() {}
   
   create() {
+
+    this.time.addEvent({
+      delay: 2500,
+      callback: this.youTouchMyTiger,
+      callbackScope: this,
+      loop: false,
+    });
+
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
     
@@ -235,12 +243,6 @@ class Scene2 extends Phaser.Scene {
   /////////////////////////////
 
   update() {
-    if(this.totalScore == 0){
-      var touchconfig = {
-        volume: .4
-      }
-      this.touchMyTiger.play(touchconfig);
-    }
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.shootBeam();
     }
@@ -299,7 +301,7 @@ class Scene2 extends Phaser.Scene {
     projectile.destroy();
     enemy.destroy();
     this.time.addEvent({
-      delay: 8000,
+      delay: 4,
       callback: this.addAgent,
       callbackScope: this,
       loop: false,
@@ -385,12 +387,8 @@ class Scene2 extends Phaser.Scene {
       delay: 0,
     };
     this.neverRecover.play(recoverConfig);
-    alert('Game over! YOUR SCORE: ' + this.totalScore);
-    this.player.x = 22;
-    this.player.y = 120;
-    this.laloScore = 10000;
-    this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
     this.scene.start('playGame');
+    alert('Game over! YOUR SCORE: ' + this.totalScore);
   }
   gameWin() {
     alert('YOU WON!!! YOU ARE A FRIEND OF THE CARTEL!! WOOHOO!!!!! $$$$$$$');
@@ -438,6 +436,13 @@ class Scene2 extends Phaser.Scene {
     this.addTiger();
   }
 
+  youTouchMyTiger(){
+      var touchconfig = {
+        volume: .4
+      }
+      this.touchMyTiger.play(touchconfig);
+  }
+
   killLiveMusic() {
     this.killCarole.stop();
     this.touchMyTiger.stop();
@@ -448,7 +453,7 @@ class Scene2 extends Phaser.Scene {
     this.ohno.pause();
     this.coolcats.pause();
     this.time.addEvent({
-      delay: 3000,
+      delay: 2,
       callback: this.killLiveMusic,
       callbackScope: this,
       loop: false,
