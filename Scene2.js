@@ -203,7 +203,7 @@ class Scene2 extends Phaser.Scene {
       'Joe Exotic Net Worth: $' + this.laloScore,
       {
         fontSize: '12px',
-        fill: 'lime',
+        fill: 'orange',
       }
     );
     this.totalScoreLabel = this.add.text(290, 5, 'SCORE: ' + this.totalScore, {
@@ -327,7 +327,6 @@ class Scene2 extends Phaser.Scene {
   }
 
   gameLose() {
-    alert('Game over! YOUR SCORE: ' + this.totalScore);
     this.killLiveMusic();
     var recoverConfig = {
       mute: false,
@@ -339,6 +338,7 @@ class Scene2 extends Phaser.Scene {
       delay: 0,
     };
     this.neverRecover.play(recoverConfig);
+    alert('Game over! YOUR SCORE: ' + this.totalScore);
     if (localStorage.getItem('username')) {
       (async () => {
         const rawResponse = await fetch(
