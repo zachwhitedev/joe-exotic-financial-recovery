@@ -338,7 +338,6 @@ class Scene2 extends Phaser.Scene {
       delay: 0,
     };
     this.neverRecover.play(recoverConfig);
-    alert('Game over! YOUR SCORE: ' + this.totalScore);
     if (localStorage.getItem('username')) {
       (async () => {
         const rawResponse = await fetch(
@@ -354,9 +353,10 @@ class Scene2 extends Phaser.Scene {
               score: this.totalScore,
             }),
           }
-        );
-      })();
-    }
+          );
+        })();
+      }
+    alert('Game over! YOUR SCORE: ' + this.totalScore);
     this.scene.restart();
   }
   gameWin() {
