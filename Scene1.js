@@ -6,6 +6,7 @@ class Scene1 extends Phaser.Scene {
   preload() {
     this.load.image('mainMenu', 'assets/images/mainMenu.png');
     this.load.image('background', 'assets/images/asphalt.png');
+    this.load.image('scoreboard', 'assets/images/scoreboard.png');
     this.load.image('playButton', 'assets/images/play-button.png');
     this.load.image('zooSign', 'assets/images/zooSign.png');
     this.load.image('bullet', 'assets/images/bullet.png');
@@ -25,10 +26,10 @@ class Scene1 extends Phaser.Scene {
     this.load.image('cafe', 'assets/images/cafe.png');
     this.load.image('copcar', 'assets/images/copcar.png');
     this.load.audio('music', 
-      'assets/sounds/theme.mp3',
+      'assets/sounds/menuTheme.mp3',
     );
     this.load.audio('menuTheme', 
-      'assets/sounds/menuTheme.mp3',
+      'assets/sounds/theme.mp3',
     );
     this.load.audio('itscarole', 
       'assets/sounds/itscarole.mp3',
@@ -55,7 +56,7 @@ class Scene1 extends Phaser.Scene {
 
   create() {
     this.menuTheme = this.sound.add('menuTheme');
-    this.menuTheme.play();
+    // this.menuTheme.play();
     this.background = this.add.image(0, 0, 'mainMenu');
     this.background.setOrigin(0, 0);
 
