@@ -9,7 +9,7 @@ class Scene2 extends Phaser.Scene {
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
     this.music = this.sound.add('music');
-    // this.music.play();
+    this.music.play();
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.image(30, 35, 'player');
@@ -342,7 +342,7 @@ class Scene2 extends Phaser.Scene {
     if (localStorage.getItem('username')) {
       (async () => {
         const rawResponse = await fetch(
-          'https://www.v8asdfhajkfh.org/tigerleaderboard',
+          'https://vf8huftlq6.execute-api.us-west-2.amazonaws.com/dev/submittigerscore',
           {
             method: 'POST',
             headers: {
@@ -351,7 +351,7 @@ class Scene2 extends Phaser.Scene {
             },
             body: JSON.stringify({
               username: localStorage.getItem('username'),
-              score: this.laloScore,
+              score: this.totalScore,
             }),
           }
         );
