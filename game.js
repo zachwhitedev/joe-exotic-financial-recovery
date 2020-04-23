@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   }
 });
 
-
 function setUsername(){
   let username = document.forms[0].elements[0].value
   localStorage.setItem('username', username.toString())

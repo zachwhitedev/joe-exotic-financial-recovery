@@ -12,7 +12,6 @@ class Scene1 extends Phaser.Scene {
       })
       .then((data) => {
         const scores = data.body.scores;
-        console.log(scores);
         let table = document.getElementById('leaderboard');
         for (var i = 0; i < scores.length; i++) {
           var tr = document.createElement('tr');
@@ -44,6 +43,7 @@ class Scene1 extends Phaser.Scene {
     this.load.image('bullet', 'assets/images/bullet.png');
     this.load.image('signPost', 'assets/images/signPost.png');
     this.load.image('bank', 'assets/images/bank.png');
+    this.load.image('station', 'assets/images/station.png');
     this.load.image('houseyellow', 'assets/images/houseyellow.png');
     this.load.image('houseblue', 'assets/images/houseblue.png');
     this.load.image('housepink', 'assets/images/housepink.png');
@@ -70,20 +70,26 @@ class Scene1 extends Phaser.Scene {
 
   create() {
     this.menuTheme = this.sound.add('menuTheme');
-    this.menuTheme.play();
+    let menuConfig = {
+      volume: .01
+    }
+    this.menuTheme.play(menuConfig);
     this.background = this.add.image(0, 0, 'mainMenu');
     this.background.setOrigin(0, 0);
 
     this.cameras.main.setViewport(5, 5, 390, 290);
 
-    var playButton = this.add.image(
+    this.playButton = this.add.image(
       this.game.renderer.width / 2,
       this.game.renderer.height / 2 + 40,
       'playButton'
     );
-    playButton.setInteractive();
+    this.playButton.setInteractive();
 
-    playButton.on('pointerup', () => {
+  }
+  
+  update(){
+    this.playButton.on('pointerup', () => {
       this.cameras.main.fade(200);
       this.time.addEvent({
         delay: 1000,
@@ -92,6 +98,7 @@ class Scene1 extends Phaser.Scene {
         loop: false,
       });
     });
+
   }
 
   sceneSwitch() {

@@ -9,7 +9,7 @@ class Scene2 extends Phaser.Scene {
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
     this.music = this.sound.add('music');
-    this.music.play();
+    // this.music.play();
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.image(30, 35, 'player');
@@ -36,11 +36,8 @@ class Scene2 extends Phaser.Scene {
     this.tiger3.setBounce(1);
     //////////////////////////////////
 
-    this.agent = this.physics.add.image(
-      300,
-      Phaser.Math.Between(280, 340),
-      'agent'
-    );
+    this.station = this.add.image(344, 254, 'station');
+    this.agent = this.physics.add.image(344, 254, 'agent');
     this.agent.setCollideWorldBounds(true);
 
     ///////////// BUILDINGS /////////////////
@@ -88,6 +85,7 @@ class Scene2 extends Phaser.Scene {
     this.horwall4.setSize(38, 6);
 
     this.buildings = this.physics.add.staticGroup();
+    this.buildings.add(this.station);
     this.buildings.add(this.bank);
     this.buildings.add(this.houseyellow);
     this.buildings.add(this.houseyellow2);
@@ -225,9 +223,9 @@ class Scene2 extends Phaser.Scene {
     if (this.totalScore % 750 == 0) {
       this.sendCopCar();
     }
-    if (this.totalScore % 900 == 0 && this.totalScore != 0) {
+    if (this.totalScore % 1200 == 0 && this.totalScore != 0) {
       this.addCarole();
-    } else if (this.totalScore % 1500 == 0 && this.totalScore != 0) {
+    } else if (this.totalScore % 2000 == 0 && this.totalScore != 0) {
       this.addAgent();
       this.addTiger();
     }
@@ -236,6 +234,10 @@ class Scene2 extends Phaser.Scene {
     this.movePlayerManager();
     if (this.laloScore <= -1) {
       this.gameLose();
+    }
+    if (this.copCars.x > 410 || this.copCars.x < -10) {
+      this.copCars.destroy();
+      console.log('car destroyed');
     }
   }
 
@@ -273,7 +275,7 @@ class Scene2 extends Phaser.Scene {
     projectile.destroy();
     enemy.destroy();
     this.time.addEvent({
-      delay: 4,
+      delay: 12000,
       callback: this.addAgent,
       callbackScope: this,
       loop: false,
@@ -299,15 +301,21 @@ class Scene2 extends Phaser.Scene {
   }
 
   addTiger() {
-    var x =
-      this.player.x < 200
-        ? Phaser.Math.Between(330, 380)
-        : Phaser.Math.Between(20, 100);
-    var y =
-      this.player.y < 150
-        ? Phaser.Math.Between(260, 280)
-        : Phaser.Math.Between(20, 100);
-    var newTiger = this.physics.add.image(x, y, 'tiger');
+    let randomNum = Math.floor(Math.random() * 6);
+    this.entryPoints = [
+      { x: 70, y: 10 },
+      { x: 135, y: 10 },
+      { x: 278, y: 10 },
+      { x: 278, y: 385 },
+      { x: 66, y: 380 },
+      { x: 155, y: 385 },
+    ];
+
+    var newTiger = this.physics.add.image(
+      this.entryPoints[randomNum].x,
+      this.entryPoints[randomNum].y,
+      'tiger'
+    );
     newTiger.setVelocity(20);
     newTiger.setBounce(1);
     newTiger.setCollideWorldBounds(true);
@@ -353,12 +361,13 @@ class Scene2 extends Phaser.Scene {
               score: this.totalScore,
             }),
           }
-          );
-        })();
-      }
+        );
+      })();
+    }
     alert('Game over! YOUR SCORE: ' + this.totalScore);
     this.scene.restart();
   }
+
   gameWin() {
     alert('YOU WON!!! YOU ARE A FRIEND OF THE CARTEL!! WOOHOO!!!!! $$$$$$$');
     this.player.x = 22;
@@ -367,13 +376,9 @@ class Scene2 extends Phaser.Scene {
     this.laloScoreLabel.text = 'Joe Exotic Net Worth: $' + this.laloScore;
   }
   addAgent() {
-    var newAgent = this.physics.add.image(
-      Phaser.Math.Between(-10, 380),
-      350,
-      'agent'
-    );
+    var newAgent = this.physics.add.image(344, 254, 'agent');
     newAgent.setVelocityY(-15);
-    newAgent.setVelocityX(15);
+    newAgent.setVelocityX(Phaser.Math.Between(-25, 25));
     newAgent.setBounce(1);
     newAgent.setCollideWorldBounds(true);
     this.enemies.add(newAgent);
@@ -385,7 +390,6 @@ class Scene2 extends Phaser.Scene {
     copCar.setBounce(0);
     copCar.setCollideWorldBounds(false);
     this.copCars.add(copCar);
-    this.addTiger();
   }
 
   addCarole() {
@@ -407,6 +411,7 @@ class Scene2 extends Phaser.Scene {
     newCarole.setCollideWorldBounds(true);
     this.enemies.add(newCarole);
     this.addTiger();
+    this.addAgent();
   }
 
   killLiveMusic() {
